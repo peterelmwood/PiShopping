@@ -19,3 +19,9 @@ source $PISHOPDIR/venv/bin/activate
 # install requirements, including Django
 pip install -r requirements.txt
 
+# start the project
+# django-admin startproject pishopping $PISHOPDIR
+
+# create app for list and items
+# django-admin startapp list
+
