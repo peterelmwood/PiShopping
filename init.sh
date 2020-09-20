@@ -19,6 +19,9 @@ source $PISHOPDIR/venv/bin/activate
 # install requirements, including Django
 pip install -r requirements.txt
 
+# migrate the database changes
+python manage.py migrate
+
 # start the project
 # django-admin startproject pishopping $PISHOPDIR
 
