@@ -18,8 +18,11 @@ class ShoppingList(models.Model):
     # the list needs a name
     name = models.CharField(max_length=50, blank=False, null=False)
 
+    # if the list is still open
+    completed = models.BooleanField(default=False)
+
     # date the list was closed
-    closed = models.BooleanField(default=False)
+    closed = models.DateTimeField(null=True, blank=True)
 
     # this attribute relates the shopping list to a specific store
     store = models.ForeignKey(
