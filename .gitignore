@@ -116,3 +116,5 @@ media/
 
 # secret key!
 **/secret_key.py
+
+/static/
