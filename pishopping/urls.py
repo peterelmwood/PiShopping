@@ -20,6 +20,5 @@ from core import views as coreviews
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', coreviews.home),
-    path('home', coreviews.home, name="home" ),
-    path('shoppinglists/', include('shoppinglists.urls')),
+    path('home', coreviews.home, name="home" ),    
 ]
