@@ -116,3 +116,5 @@ media/
 
 # secret key!
 **/secret_key.py
+
+**/node_modules/https://github.com/peterelmwood/PiShopping.git
