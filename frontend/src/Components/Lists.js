@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -21,25 +21,6 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
-function createData(name, count) {
-  return { name, count };
-}
-
-const rows = [
-  createData('Cupcake', 4),
-  createData('Donut', 2),
-  createData('Eclair', 7),
-  createData('Frozen yoghurt', 5),
-  createData('Gingerbread', 1),
-  createData('Honeycomb', 11),
-  createData('Ice cream sandwich', 9),
-  createData('Jelly Bean', 21),
-  createData('KitKat', 25),
-  createData('Lollipop', 72),
-  createData('Marshmallow', 300),
-  createData('Nougat', 3),
-  createData('Oreo', 24),
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -68,8 +49,8 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Dessert (100g serving)' },
-  { id: 'count', numeric: true, disablePadding: false, label: 'Count' },
+  { id: 'name', numeric: false, disablePadding: true, label: 'List Name' },
+  { id: 'count', numeric: true, disablePadding: false, label: 'Item Count' },
 ];
 
 function EnhancedTableHead(props) {
@@ -150,35 +131,37 @@ const EnhancedTableToolbar = (props) => {
   const { numSelected } = props;
 
   return (
-    <Toolbar
-      className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
-      {numSelected > 0 ? (
-        <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
-          {numSelected} selected
-        </Typography>
-      ) : (
-          <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-            Shopping List
+    <>
+      <Toolbar
+        className={clsx(classes.root, {
+          [classes.highlight]: numSelected > 0,
+        })}
+      >
+        {numSelected > 0 ? (
+          <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
+            {numSelected} selected
           </Typography>
-        )}
+        ) : (
+            <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+              Shopping List
+            </Typography>
+          )}
 
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="filter list">
-              <FilterListIcon />
+        {numSelected > 0 ? (
+          <Tooltip title="Delete">
+            <IconButton aria-label="delete">
+              <DeleteIcon />
             </IconButton>
           </Tooltip>
-        )}
-    </Toolbar>
+        ) : (
+            <Tooltip title="Filter list">
+              <IconButton aria-label="filter list">
+                <FilterListIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+      </Toolbar>
+    </>
   );
 };
 
@@ -217,6 +200,7 @@ export default function Lists() {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [shoppingLists, setShoppingLists] = useState([]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -226,12 +210,37 @@ export default function Lists() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = shoppingLists.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
+
+
+  const get = async (url, callback) => {
+    const fetchResponse = await fetch(url);
+    fetchResponse.json().then(response => {
+      if (response) {
+        callback(response);
+      }
+    });
+  }
+
+  const callback = (response) => {
+    console.log(response);
+    setShoppingLists(response);
+  }
+
+  useEffect(() => {
+    get('/api/shopping-lists/', callback)
+  }, [])
+
+  const printShoppingLists = () => {
+    if (shoppingLists.length) {
+      return shoppingLists[0].name;
+    }
+  }
 
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
@@ -264,7 +273,7 @@ export default function Lists() {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, shoppingLists.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -284,10 +293,10 @@ export default function Lists() {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={shoppingLists.length}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(shoppingLists, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
@@ -327,13 +336,15 @@ export default function Lists() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={shoppingLists.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
+      {shoppingLists ? <p>{printShoppingLists()}</p> : <></>}
+
     </div>
   );
 }
