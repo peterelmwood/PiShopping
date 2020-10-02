@@ -1,14 +1,13 @@
 import React from 'react';
 
-import Lists from "./Components/Lists";
-import logo from './logo.svg';
+import Lists2 from "./Components/Lists2";
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <body>
-        <Lists></Lists>
+        <Lists2></Lists2>
       </body>
     </div>
   );

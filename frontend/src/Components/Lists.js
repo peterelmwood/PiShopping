@@ -217,7 +217,6 @@ export default function Lists() {
     setSelected([]);
   };
 
-
   const get = async (url, callback) => {
     const fetchResponse = await fetch(url);
     fetchResponse.json().then(response => {
