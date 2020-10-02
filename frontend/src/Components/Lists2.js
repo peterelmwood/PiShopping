@@ -85,12 +85,6 @@ const Lists2 = () => {
     }
   }, [refresh])
 
-  const printShoppingLists = () => {
-    if (shoppingLists.length) {
-      return shoppingLists[0].name;
-    }
-  }
-
   const postCallback = (response) => {
     console.log(response);
     setRefresh(true);
