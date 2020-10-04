@@ -1,5 +1,4 @@
 import React, { useState, useEffect, forwardRef } from "react";
-import ReactDOM from "react-dom";
 import MaterialTable from "material-table";
 
 import AddBox from '@material-ui/icons/AddBox';
@@ -56,29 +55,27 @@ const Lists2 = () => {
   const urlShoppingLists = '/api/shopping-lists/';
   const urlStores = '/api/stores/';
 
-  const shoppingListsCallback = (response) => {
-    console.log(response);
-    setShoppingLists(response);
-    if (refresh) {
-      setRefresh(false)
-    }
-  }
-
-  const storesCallback = (response) => {
-    console.log(response);
-    const stores = response.map((store) => {
-      let rObj = {};
-      rObj[store.id] = store.name;
-      return rObj;
-    });
-    console.log("stores: ", stores);
-    setStores(stores);
-    if (refresh) {
-      setRefresh(false)
-    }
-  }
-
   useEffect(() => {
+    const shoppingListsCallback = (response) => {
+      setShoppingLists(response);
+      if (refresh) {
+        setRefresh(false)
+      }
+    }
+  
+    const storesCallback = (response) => {
+      console.log(response);
+      const stores = response.map((store) => {
+        let rObj = {};
+        rObj[store.id] = store.name;
+        return rObj;
+      });
+      console.log("stores: ", stores);
+      setStores(stores);
+      if (refresh) {
+        setRefresh(false)
+      }
+    }
     if (refresh){
       get(urlShoppingLists, shoppingListsCallback);
       get(urlStores, storesCallback);
@@ -110,8 +107,7 @@ const Lists2 = () => {
         onRowAdd: newData =>
           post(newData, urlShoppingLists, postCallback),
         onRowUpdate: (newData, oldData) =>
-          update(newData.id, 'PATCH', newData, urlShoppingLists, patchCallback)
-        ,
+          update(newData.id, 'PATCH', newData, urlShoppingLists, patchCallback),
         onRowDelete: oldData =>
           del(urlShoppingLists, oldData.id, deleteCallback)
         ,
