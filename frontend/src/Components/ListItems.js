@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { get } from '../Utils/Crud';
-import { Link } from '@material-ui/core';
+import { useParams, Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
   table: {
@@ -17,15 +17,16 @@ const useStyles = makeStyles({
 });
 
 export default function ListItems(props) {
+  let { shoppinglist } = useParams();
   const classes = useStyles();
 
   const [listItems, setListItems] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
-  const urlShoppingList = '/api/shopping-lists/{props.id}/';
+  const urlShoppingList = `/api/shopping-lists/${props.id}/`;
 
   useEffect(() => {
-
+    console.log(shoppinglist);
     get(urlShoppingList, setListItems);
 
   }, [refresh])
@@ -39,18 +40,12 @@ export default function ListItems(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-        {listItems.map((item) => (
+          {listItems.map((item) => (
             <TableRow key={item.id}>
               <TableCell component="th" scope="row">
-                <Link href={"/lists/" + item.id + "/"}>{item.name}</Link>
+                <Link to={"/shoppinglists/" + item.id}>{item.name}</Link>
               </TableCell>
-              <TableCell align="right">{item.store}</TableCell>
-              <TableCell align="right">{item.closed ? "Yes" : "No"}</TableCell>
-              <TableCell align="right">{item.created}</TableCell>
-              <TableCell align="right">{item.updated}</TableCell>
-              {/* <TableCell align="right">{list.fat}</TableCell>
-              <TableCell align="right">{list.carbs}</TableCell>
-              <TableCell align="right">{list.protein}</TableCell> */}
+              <TableCell align="right">{item.quantity}</TableCell>
             </TableRow>
           ))}
         </TableBody>

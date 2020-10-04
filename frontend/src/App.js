@@ -9,6 +9,7 @@ import ListIcon from '@material-ui/icons/List';
 import './App.css';
 import ShoppingLists from "./Components/ShoppingLists";
 import Stores from './Components/Stores';
+import ListItems from "./Components/ListItems";
 
 const drawerWidth = 240;
 
