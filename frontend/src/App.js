@@ -97,8 +97,8 @@ function App() {
                   <Route path="/shoppinglists">
                     <ShoppingLists />
                   </Route>
-                  <Route>
-                    <ShoppingLists />
+                  <Route path="/shoppinglists/:shoppinglist">
+                    <ListItems />
                   </Route>
                 </Switch>
               </main>
