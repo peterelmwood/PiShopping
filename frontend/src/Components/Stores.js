@@ -19,7 +19,6 @@ const useStyles = makeStyles({
 export default function Stores() {
   const classes = useStyles();
 
-  const [shoppingLists, setShoppingLists] = useState([]);
   const [stores, setStores] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
@@ -27,28 +26,8 @@ export default function Stores() {
   const urlStores = '/api/stores/';
 
   useEffect(() => {
-    const shoppingListsCallback = (response) => {
-      setShoppingLists(response);
-      if (refresh) {
-        setRefresh(false)
-      }
-    }
 
-    const storesCallback = (response) => {
-      console.log(response);
-      const stores = response.map((store) => {
-        let rObj = {};
-        rObj[store.id] = store.name;
-        return rObj;
-      });
-      console.log("stores: ", stores);
-      setStores(stores);
-      if (refresh) {
-        setRefresh(false)
-      }
-    }
-    get(urlShoppingLists, shoppingListsCallback);
-    get(urlStores, storesCallback);
+    get(urlStores, setStores);
 
   }, [refresh])
 
@@ -57,26 +36,15 @@ export default function Stores() {
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>List Name</TableCell>
-            <TableCell align="right">Store</TableCell>
-            <TableCell align="right">Closed?</TableCell>
-            <TableCell align="right"></TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>Name</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {shoppingLists.map((list) => (
-            <TableRow key={list.id}>
+          {stores.map((store) => (
+            <TableRow key={store.id}>
               <TableCell component="th" scope="row">
-                <Link href={"/lists/" + list.id + "/"}>{list.name}</Link>
+                <Link href={"/stores/" + store.id + "/"}>{store.name}</Link>
               </TableCell>
-              <TableCell align="right">{list.store}</TableCell>
-              <TableCell align="right">{list.closed ? "Yes" : "No"}</TableCell>
-              <TableCell align="right">{list.created}</TableCell>
-              <TableCell align="right">{list.updated}</TableCell>
-              {/* <TableCell align="right">{list.fat}</TableCell>
-              <TableCell align="right">{list.carbs}</TableCell>
-              <TableCell align="right">{list.protein}</TableCell> */}
             </TableRow>
           ))}
         </TableBody>

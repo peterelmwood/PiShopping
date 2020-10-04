@@ -3,15 +3,12 @@ import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import { Drawer, AppBar, Divider, List, ListItem, ListItemIcon, makeStyles, Toolbar, Typography } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import StoreIcon from "@material-ui/icons/Store";
 import ListIcon from '@material-ui/icons/List';
 
-import ShoppingLists from "./Components/ShoppingLists";
 import './App.css';
-import Lists2 from './Components/Lists2';
-import Lists from './Components/Lists';
+import ShoppingLists from "./Components/ShoppingLists";
+import Stores from './Components/Stores';
 
 const drawerWidth = 240;
 
@@ -37,6 +34,27 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
 }));
+
+function ListItemLink(props) {
+  const { icon, primary, to } = props;
+
+  const CustomLink = React.useMemo(
+    () =>
+      React.forwardRef((linkProps, ref) => (
+        <Link ref={ref} to={to} {...linkProps} />
+      )),
+    [to],
+  );
+
+  return (
+    <li>
+      <ListItem button component={CustomLink}>
+        <ListItemIcon>{icon}</ListItemIcon>
+        <ListItemText primary={primary} />
+      </ListItem>
+    </li>
+  );
+}
 
 function App() {
   const classes = useStyles();
@@ -64,15 +82,9 @@ function App() {
               >
                 <Toolbar />
                 <div className={classes.drawerContainer}>
-                  <List>
-                    <ListItem button key="Stores">
-                      <ListItemIcon><StoreIcon /></ListItemIcon>
-                      <ListItemText primary="Stores" />
-                    </ListItem>
-                    <ListItem button key="Shopping Lists">
-                      <ListItemIcon><ListIcon /></ListItemIcon>
-                      <ListItemText primary="Shopping Lists" />
-                    </ListItem>
+                  <List component="nav">
+                    <ListItemLink to={'/stores'} icon={<StoreIcon></StoreIcon>} primary="Stores"></ListItemLink>
+                    <ListItemLink to={'/shoppinglists'} icon={<ListIcon />} primary="Shopping Lists"></ListItemLink>
                   </List>
                 </div>
               </Drawer>
@@ -80,12 +92,12 @@ function App() {
                 <Toolbar />
                 <Switch>
                   <Route path="/stores">
+                    <Stores />
+                  </Route>
+                  <Route path="/shoppinglists">
                     <ShoppingLists />
                   </Route>
-                  <Route path="/users">
-                    <Lists2 />
-                  </Route>
-                  <Route path="/">
+                  <Route>
                     <ShoppingLists />
                   </Route>
                 </Switch>
