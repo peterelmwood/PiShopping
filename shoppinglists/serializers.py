@@ -11,12 +11,21 @@ class StoreSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class ShoppingListSerializer(serializers.ModelSerializer):
+class ShoppingListListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ShoppingList
         fields = "__all__"
         read_only_fields = ["created", "updated"]
+
+class ShoppingListDetailSerializer(serializers.ModelSerializer):
+    # listitems = serializers.SerializerMethodField()
+    class Meta:
+        model = ShoppingList
+        fields = "__all__"
+        read_only_fields = ["created", "updated"]
+    
+    # def get_listitems(self, )
 
 
 class ListItemSerializer(serializers.ModelSerializer):

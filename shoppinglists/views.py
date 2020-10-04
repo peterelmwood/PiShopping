@@ -1,14 +1,21 @@
-from shoppinglists.models import ListItem, ShoppingList, Store
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from rest_framework import viewsets
+from rest_framework.response import Response
 
-from shoppinglists.serializers import ShoppingListSerializer, ListItemSerializer, StoreSerializer
+from shoppinglists.models import ListItem, ShoppingList, Store
+from shoppinglists.serializers import ShoppingListListSerializer, ListItemSerializer, StoreSerializer
 
 
 class ShoppingListViewSet(viewsets.ModelViewSet):
     queryset = ShoppingList.objects.all()
-    serializer_class = ShoppingListSerializer
+    serializer_class = ShoppingListListSerializer
+
+    def retrieve(self, request, pk=None):
+        queryset = ShoppingList.objects.all()
+        shopping_list = get_object_or_404(queryset, pk=pk)
+        serializer = ShoppingListListSerializer(shopping_list)
+        return Response(serializer.data)
 
 
 class ListItemViewSet(viewsets.ModelViewSet):
