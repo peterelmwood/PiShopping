@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { get } from '../Utils/Crud';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useRouteMatch } from 'react-router-dom';
 
 const useStyles = makeStyles({
   table: {
@@ -17,39 +17,48 @@ const useStyles = makeStyles({
 });
 
 export default function ListItems(props) {
-  let { shoppinglist } = useParams();
+  let { id } = useParams();
+
   const classes = useStyles();
 
   const [listItems, setListItems] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
-  const urlShoppingList = `/api/shopping-lists/${props.id}/`;
+  const urlShoppingList = `/api/shopping-lists/${id}/`;
 
   useEffect(() => {
-    console.log(shoppinglist);
+    console.log(id);
     get(urlShoppingList, setListItems);
+    console.log(listItems);
+  }, [refresh]);
 
-  }, [refresh])
+  const Result = () => {
 
-  return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {listItems.map((item) => (
-            <TableRow key={item.id}>
-              <TableCell component="th" scope="row">
-                <Link to={"/shoppinglists/" + item.id}>{item.name}</Link>
-              </TableCell>
-              <TableCell align="right">{item.quantity}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+    if (listItems.length) {
+      return (
+        <TableContainer component={Paper}>
+          <Table className={classes.table} size="small" aria-label="a dense table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {listItems.map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell component="th" scope="row">
+                    {item.name}
+                  </TableCell>
+                  <TableCell align="right">{item.quantity}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )
+    }
+    return <p>There are no list items defined.</p>
+  }
+
+  return Result;
 }

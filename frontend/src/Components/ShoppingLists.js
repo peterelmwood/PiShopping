@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { get } from '../Utils/Crud';
 import { Link } from '@material-ui/core';
+import { useParams } from 'react-router-dom';
 
 const useStyles = makeStyles({
   table: {
@@ -30,6 +31,7 @@ const useStyles = makeStyles({
 
 export default function ShoppingLists() {
   const classes = useStyles();
+  const { id } = useParams
 
   const [shoppingLists, setShoppingLists] = useState([]);
   const [stores, setStores] = useState([]);
@@ -72,15 +74,15 @@ export default function ShoppingLists() {
             <TableCell>List Name</TableCell>
             <TableCell align="right">Store</TableCell>
             <TableCell align="right">Closed?</TableCell>
-            <TableCell align="right"></TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell align="right">Created</TableCell>
+            <TableCell align="right">Updated</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {shoppingLists.map((list) => (
             <TableRow key={list.id}>
               <TableCell component="th" scope="row">
-                <Link href={"/lists/" + list.id + "/"}>{list.name}</Link>
+                <Link href={"/shoppinglists/" + list.id + "/"}>{list.name}</Link>
               </TableCell>
               <TableCell align="right">{list.store}</TableCell>
               <TableCell align="right">{list.closed ? "Yes" : "No"}</TableCell>

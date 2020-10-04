@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Link, Route, Switch, useRouteMatch } from "react-router-dom";
 import { Drawer, AppBar, Divider, List, ListItem, ListItemIcon, makeStyles, Toolbar, Typography } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -8,6 +8,7 @@ import ListIcon from '@material-ui/icons/List';
 
 import './App.css';
 import ShoppingLists from "./Components/ShoppingLists";
+import ShoppingLists2 from "./Components/ShoppingLists2";
 import Stores from './Components/Stores';
 import ListItems from "./Components/ListItems";
 
@@ -95,12 +96,10 @@ function App() {
                   <Route path="/stores">
                     <Stores />
                   </Route>
-                  <Route path="/shoppinglists">
+                  <Route exact path="/shoppinglists">
                     <ShoppingLists />
                   </Route>
-                  <Route path="/shoppinglists/:shoppinglist">
-                    <ListItems />
-                  </Route>
+                  <Route exact path="/shoppinglists/:id/" children={<ListItems />} />
                 </Switch>
               </main>
             </div>
