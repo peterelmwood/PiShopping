@@ -47,7 +47,7 @@ export default function ListItems(props) {
         <TableHead>
           <TableRow>
             <StyledTableCell>Name</StyledTableCell>
-            <StyledTableCell align="right">Quantity</StyledTableCell>
+            <StyledTableCell>Quantity</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -56,7 +56,7 @@ export default function ListItems(props) {
               <TableCell component="th" scope="row">
                 {item.name}
               </TableCell>
-              <TableCell align="right">{item.quantity}</TableCell>
+              <TableCell>{item.quantity}</TableCell>
             </TableRow>
           ))}
         </TableBody>
