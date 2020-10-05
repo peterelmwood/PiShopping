@@ -43,7 +43,7 @@ export default function Stores() {
           {stores.map((store) => (
             <TableRow key={store.id}>
               <TableCell component="th" scope="row">
-                <Link href={"/stores/" + store.id + "/"}>{store.name}</Link>
+                <Link href={`/stores/${store.id}/`}>{store.name}</Link>
               </TableCell>
             </TableRow>
           ))}

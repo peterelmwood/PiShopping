@@ -4,7 +4,12 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 
 from shoppinglists.models import ListItem, ShoppingList, Store
-from shoppinglists.serializers import ShoppingListListSerializer, ListItemSerializer, StoreSerializer
+from shoppinglists.serializers import (
+    ShoppingListDetailSerializer,
+    ShoppingListListSerializer,
+    ListItemSerializer,
+    StoreSerializer,
+)
 
 
 class ShoppingListViewSet(viewsets.ModelViewSet):
@@ -14,7 +19,7 @@ class ShoppingListViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, pk=None):
         queryset = ShoppingList.objects.all()
         shopping_list = get_object_or_404(queryset, pk=pk)
-        serializer = ShoppingListListSerializer(shopping_list)
+        serializer = ShoppingListDetailSerializer(shopping_list)
         return Response(serializer.data)
 
 

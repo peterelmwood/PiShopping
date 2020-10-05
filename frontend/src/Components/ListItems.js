@@ -21,44 +21,44 @@ export default function ListItems(props) {
 
   const classes = useStyles();
 
+  const [shoppingList, setShoppingList] = useState({});
   const [listItems, setListItems] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
   const urlShoppingList = `/api/shopping-lists/${id}/`;
 
-  useEffect(() => {
-    console.log(id);
-    get(urlShoppingList, setListItems);
-    console.log(listItems);
-  }, [refresh]);
-
-  const Result = () => {
-
-    if (listItems.length) {
-      return (
-        <TableContainer component={Paper}>
-          <Table className={classes.table} size="small" aria-label="a dense table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {listItems.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell component="th" scope="row">
-                    {item.name}
-                  </TableCell>
-                  <TableCell align="right">{item.quantity}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      )
-    }
-    return <p>There are no list items defined.</p>
+  function populateTheList(response) {
+    setShoppingList(response);
+    setListItems(response.listitems);
   }
 
-  return Result;
+  useEffect(() => {
+    console.log(id);
+    get(urlShoppingList, populateTheList);
+    console.log(listItems);
+    console.log(listItems.length);
+  }, []);
+
+  return (
+    <TableContainer component={Paper}>
+      <Table className={classes.table} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell align="right">Quantity</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {listItems.map((item) => (
+            <TableRow key={item.id}>
+              <TableCell component="th" scope="row">
+                {item.name}
+              </TableCell>
+              <TableCell align="right">{item.quantity}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  )
 }

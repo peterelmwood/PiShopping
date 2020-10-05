@@ -18,17 +18,17 @@ class ShoppingListListSerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = ["created", "updated"]
 
-class ShoppingListDetailSerializer(serializers.ModelSerializer):
-    # listitems = serializers.SerializerMethodField()
-    class Meta:
-        model = ShoppingList
-        fields = "__all__"
-        read_only_fields = ["created", "updated"]
-    
-    # def get_listitems(self, )
-
 
 class ListItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = ListItem
         fields = "__all__"
+
+
+class ShoppingListDetailSerializer(serializers.ModelSerializer):
+    listitems = ListItemSerializer(many=True)
+
+    class Meta:
+        model = ShoppingList
+        fields = "__all__"
+        read_only_fields = ["created", "updated"]

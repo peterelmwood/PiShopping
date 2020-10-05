@@ -72,7 +72,7 @@ function App() {
                 <Toolbar>
                   <Typography variant="h6" noWrap>
                     Shopping with Pi
-              </Typography>
+                  </Typography>
                 </Toolbar>
               </AppBar>
               <Drawer

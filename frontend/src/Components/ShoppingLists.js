@@ -8,8 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { get } from '../Utils/Crud';
-import { Link } from '@material-ui/core';
-import { useParams } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   table: {
@@ -17,21 +16,8 @@ const useStyles = makeStyles({
   },
 });
 
-// function createData(name, calories, fat, carbs, protein) {
-//   return { name, calories, fat, carbs, protein };
-// }
-
-// const rows = [
-//   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-//   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-//   createData('Eclair', 262, 16.0, 24, 6.0),
-//   createData('Cupcake', 305, 3.7, 67, 4.3),
-//   createData('Gingerbread', 356, 16.0, 49, 3.9),
-// ];
-
 export default function ShoppingLists() {
   const classes = useStyles();
-  const { id } = useParams
 
   const [shoppingLists, setShoppingLists] = useState([]);
   const [stores, setStores] = useState([]);
@@ -82,15 +68,12 @@ export default function ShoppingLists() {
           {shoppingLists.map((list) => (
             <TableRow key={list.id}>
               <TableCell component="th" scope="row">
-                <Link href={"/shoppinglists/" + list.id + "/"}>{list.name}</Link>
+                <Link to={`/shoppinglists/${list.id}/`}>{list.name}</Link>
               </TableCell>
               <TableCell align="right">{list.store}</TableCell>
               <TableCell align="right">{list.closed ? "Yes" : "No"}</TableCell>
               <TableCell align="right">{list.created}</TableCell>
               <TableCell align="right">{list.updated}</TableCell>
-              {/* <TableCell align="right">{list.fat}</TableCell>
-              <TableCell align="right">{list.carbs}</TableCell>
-              <TableCell align="right">{list.protein}</TableCell> */}
             </TableRow>
           ))}
         </TableBody>
