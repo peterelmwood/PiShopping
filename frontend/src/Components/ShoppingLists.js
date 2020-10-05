@@ -7,8 +7,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { get } from '../Utils/Crud';
 import { Link } from "react-router-dom";
+
+import { get } from '../Utils/Crud';
+import { StyledTableCell } from './StyledTableCell';
 
 const useStyles = makeStyles({
   table: {
@@ -57,11 +59,11 @@ export default function ShoppingLists() {
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>List Name</TableCell>
-            <TableCell align="right">Store</TableCell>
-            <TableCell align="right">Closed?</TableCell>
-            <TableCell align="right">Created</TableCell>
-            <TableCell align="right">Updated</TableCell>
+            <StyledTableCell>List Name</StyledTableCell>
+            <StyledTableCell align="right">Store</StyledTableCell>
+            <StyledTableCell align="right">Closed?</StyledTableCell>
+            <StyledTableCell align="right">Created</StyledTableCell>
+            <StyledTableCell align="right">Updated</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>

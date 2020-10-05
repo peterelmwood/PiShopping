@@ -7,8 +7,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { get } from '../Utils/Crud';
 import { useParams, Link, useRouteMatch } from 'react-router-dom';
+
+import { StyledTableCell } from './StyledTableCell';
+import { get } from '../Utils/Crud';
 
 const useStyles = makeStyles({
   table: {
@@ -44,13 +46,13 @@ export default function ListItems(props) {
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell align="right">Quantity</TableCell>
+            <StyledTableCell>Name</StyledTableCell>
+            <StyledTableCell align="right">Quantity</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {listItems.map((item) => (
-            <TableRow key={item.id}>
+            <TableRow key={item.id} onClick={() => { console.log(item.id + " was clicked") }}>
               <TableCell component="th" scope="row">
                 {item.name}
               </TableCell>

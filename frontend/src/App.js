@@ -8,7 +8,6 @@ import ListIcon from '@material-ui/icons/List';
 
 import './App.css';
 import ShoppingLists from "./Components/ShoppingLists";
-import ShoppingLists2 from "./Components/ShoppingLists2";
 import Stores from './Components/Stores';
 import ListItems from "./Components/ListItems";
 
@@ -63,9 +62,6 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <div>
-
-          <body>
             <div className={classes.root}>
               <CssBaseline />
               <AppBar position="fixed" className={classes.appBar}>
@@ -85,7 +81,7 @@ function App() {
                 <Toolbar />
                 <div className={classes.drawerContainer}>
                   <List component="nav">
-                    <ListItemLink to={'/stores'} icon={<StoreIcon></StoreIcon>} primary="Stores"></ListItemLink>
+                    <ListItemLink to={'/stores'} icon={<StoreIcon />} primary="Stores"></ListItemLink>
                     <ListItemLink to={'/shoppinglists'} icon={<ListIcon />} primary="Shopping Lists"></ListItemLink>
                   </List>
                 </div>
@@ -103,8 +99,6 @@ function App() {
                 </Switch>
               </main>
             </div>
-          </body>
-        </div>
       </Router>
     </div>
   );
