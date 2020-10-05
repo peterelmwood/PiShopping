@@ -1,9 +1,9 @@
-from shoppinglists.models import ListItem, ShoppingList, Store
 from django.test import TestCase
 
 from rest_framework.test import APIClient
 
-# Create your tests here.
+from shoppinglists.models import ListItem, ShoppingList, Store
+
 
 class ListTest(TestCase):
     
@@ -28,11 +28,9 @@ class ListTest(TestCase):
         )
 
 
-
     def test_something_can_happen(self):
         api_client = APIClient()
 
         response = api_client.get(f"/api/shopping-lists/{self.shopping_list.id}/")
 
-        print("response: ", response)
-        print("response.data: ", response.data)
+        self.assertEqual(response.status_code, 200)
