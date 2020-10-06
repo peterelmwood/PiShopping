@@ -29,7 +29,7 @@ export default function Stores() {
 
   const [open, setOpen] = useState(false);
   const [stores, setStores] = useState([]);
-  const [refresh, setRefresh] = useState(false);
+  const [refresh, setRefresh] = useState(true);
   const [newName, setNewName] = useState('');
 
   const urlStores = '/api/stores/';

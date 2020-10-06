@@ -15,7 +15,7 @@ import TextField from "@material-ui/core/TextField";
 import Modal from "@material-ui/core/Modal";
 import Grid from '@material-ui/core/Grid';
 
-import { get, post } from '../Utils/Crud';
+import { get, post, del } from '../Utils/Crud';
 import { StyledTableCell } from './StyledTableCell';
 import { MenuItem, Select } from '@material-ui/core';
 
@@ -31,7 +31,7 @@ export default function ShoppingLists() {
   const [open, setOpen] = useState(false);
   const [shoppingLists, setShoppingLists] = useState([]);
   const [stores, setStores] = useState([]);
-  const [refresh, setRefresh] = useState(false);
+  const [refresh, setRefresh] = useState(true);
 
   // Form Fields
   const [newName, setNewName] = useState('');
@@ -49,7 +49,7 @@ export default function ShoppingLists() {
       }
     }
 
-    const storesCallback = (response) => {      
+    const storesCallback = (response) => {
       setStores(response)
     }
 
@@ -108,6 +108,10 @@ export default function ShoppingLists() {
     )
   }
 
+  const deleteThis = (id) => {
+    del(urlShoppingLists, id)
+    setRefresh(true);
+  }
 
   return (
     <>
@@ -133,6 +137,7 @@ export default function ShoppingLists() {
               <StyledTableCell align="right">Closed?</StyledTableCell>
               <StyledTableCell align="right">Created</StyledTableCell>
               <StyledTableCell align="right">Updated</StyledTableCell>
+              <StyledTableCell align="right">Delete</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -145,6 +150,11 @@ export default function ShoppingLists() {
                 <TableCell align="right">{list.closed ? "Yes" : "No"}</TableCell>
                 <TableCell align="right">{list.created}</TableCell>
                 <TableCell align="right">{list.updated}</TableCell>
+                <TableCell>
+                  <Link onClick={() => deleteThis(list.id)}>
+                    <DeleteIcon></DeleteIcon>
+                  </Link>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
