@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { useParams, Link, useRouteMatch } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { StyledTableCell } from './StyledTableCell';
 import { get } from '../Utils/Crud';
@@ -23,14 +23,12 @@ export default function ListItems(props) {
 
   const classes = useStyles();
 
-  const [shoppingList, setShoppingList] = useState({});
   const [listItems, setListItems] = useState([]);
-  const [refresh, setRefresh] = useState(false);
 
   const urlShoppingList = `/api/shopping-lists/${id}/`;
 
   function populateTheList(response) {
-    setShoppingList(response);
+    // setShoppingList(response);
     setListItems(response.listitems);
   }
 
